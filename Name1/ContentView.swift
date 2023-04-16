@@ -23,7 +23,11 @@ struct ContentView: View {
                     NavigationLink {
                         Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                     } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+                        VStack{
+                            Text(item.timestamp!, formatter: itemFormatter)
+                            Text("uuid:\(item.uniqueName ?? "")")
+                        }
+                        
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -46,6 +50,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
+            newItem.uniqueName = UUID().uuidString
 
             do {
                 try viewContext.save()
